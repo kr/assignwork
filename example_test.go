@@ -17,7 +17,7 @@ func own(s string) bool {
 }
 
 func shouldRecheck(s, t string) bool {
-	excl := self.Pool.Owners([]byte(s))[:1]
+	excl := self.Pool.Owners([]byte(s))[0]
 	owners := self.Pool.OwnersExcluding([]byte(s+t), excl)
 	return self.In(owners[:RecheckWorkers])
 }

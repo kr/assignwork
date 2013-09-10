@@ -27,7 +27,7 @@ func (p Pool) Owners(item []byte) []int {
 // OwnersExcluding is like Owners, except it removes from its
 // return value the elements of exclude. (So the length of the
 // returned slice may be less than p.Size.)
-func (p Pool) OwnersExcluding(item []byte, exclude []int) []int {
+func (p Pool) OwnersExcluding(item []byte, exclude ...int) []int {
 	var a []int
 	for _, k := range p.Owners(item) {
 		if !contains(exclude, k) {
