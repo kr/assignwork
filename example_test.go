@@ -13,11 +13,11 @@ const (
 var self = assignwork.NewMember(Dyno, NDyno)
 
 func own(s string) bool {
-	return self.Owns([]byte(s))
+	return self.Owns(s)
 }
 
 func shouldRecheck(s, t string) bool {
-	excl := self.Pool.Owners([]byte(s))[0]
-	owners := self.Pool.OwnersExcluding([]byte(s+t), excl)
+	excl := self.Pool.Owners(s)[0]
+	owners := self.Pool.OwnersExcluding(s+t, excl)
 	return self.In(owners[:RecheckWorkers])
 }

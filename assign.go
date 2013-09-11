@@ -19,15 +19,15 @@ type Pool struct {
 //
 // If a single owner is needed, use element 0 in the returned slice;
 // if two are needed, use 0 and 1; etc.
-func (p Pool) Owners(item []byte) []int {
-	c := int64(crc64.Checksum(item, isoTab))
+func (p Pool) Owners(item string) []int {
+	c := int64(crc64.Checksum([]byte(item), isoTab))
 	return rand.New(rand.NewSource(c)).Perm(p.Size)
 }
 
 // OwnersExcluding is like Owners, except it removes from its
 // return value the elements of exclude. (So the length of the
 // returned slice may be less than p.Size.)
-func (p Pool) OwnersExcluding(item []byte, exclude ...int) []int {
+func (p Pool) OwnersExcluding(item string, exclude ...int) []int {
 	var a []int
 	for _, k := range p.Owners(item) {
 		if !contains(exclude, k) {
@@ -50,7 +50,7 @@ func NewMember(k, n int) Member {
 }
 
 // Owns returns whether m is the first owner of item.
-func (m Member) Owns(item []byte) bool {
+func (m Member) Owns(item string) bool {
 	return m.In(m.Owners(item)[:1])
 }
 
